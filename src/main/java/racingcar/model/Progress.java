@@ -41,12 +41,14 @@ public class Progress {
     }
 
     /**
-     * Returns new Progress incremented by the amount.
+     * Returns new Progress incremented by the amount. If the result of the increment operation is negative, an
+     * exception is raised.
      *
      * @param amount amount to increase progress
      * @return new Progress
+     * @throws IllegalArgumentException Occurs when the result of the increment operation is negative
      */
-    public Progress increaseProgress(int amount) {
+    public Progress increaseProgress(int amount) throws IllegalArgumentException {
         return new Progress(this.progress + amount);
     }
 }
