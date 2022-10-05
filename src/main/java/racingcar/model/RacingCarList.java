@@ -2,6 +2,8 @@ package racingcar.model;
 
 import static racingcar.common.Constants.*;
 
+import camp.nextstep.edu.missionutils.Randoms;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +38,62 @@ public class RacingCarList {
      */
     public String getCarStatus(int index) {
         return carList.get(index).toString();
+    }
+
+    /**
+     * Returns the status of a specific Car in the list.
+     *
+     * @return the status of a specific Car in the list.
+     */
+    public String[] getAllStatus() {
+        String[] resultRecord = new String[carList.size()];
+        for (int i = 0; i < carList.size(); i++) {
+            resultRecord[i] = carList.get(i).toString();
+        }
+        return resultRecord;
+    }
+
+    /**
+     * Returns a list of final winner car names.
+     *
+     * @return a list of final winner car names.
+     */
+    public List<String> getWinnerList() {
+        Set<String> carNameSet = new HashSet<>();
+        int winnerProgress = getWinnerProgress();
+        for (int i = 0; i < carList.size(); i++) {
+            if (carList.get(i).getProgress() >= winnerProgress) {
+                carNameSet.add(carList.get(i).getName());
+            }
+        }
+        return new ArrayList<>(carNameSet);
+    }
+
+    /**
+     * Increments all progress in the car list according to a random number.
+     */
+    public void race() {
+        for (int i = 0; i < carList.size(); i++) {
+            if (Randoms.pickNumberInRange(0, 9) >= 4) {
+                carList.get(i).increaseProgress();
+            }
+        }
+    }
+
+    /**
+     * Returns the progress of the final winner.
+     *
+     * @return the progress of the final winner.
+     */
+    private int getWinnerProgress() {
+        int max = 0;
+        for (int i = 0; i < carList.size(); i++) {
+            int currentProgress = carList.get(i).getProgress();
+            if (max <= currentProgress) {
+                max = carList.get(i).getProgress();
+            }
+        }
+        return max;
     }
 
     /**

@@ -45,7 +45,6 @@ class RacingCarListTest {
         //given
         List<Car> carList = new ArrayList<>();
         carList.add(Car.valueOf(input, 1));
-
         //when & then
         assertThatThrownBy(() -> RacingCarList.fromCarList(carList)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(
@@ -57,11 +56,61 @@ class RacingCarListTest {
     void fromCarListExceptionTest_CarDuplicate() {
         //given
         carList.add(Car.valueOf("Avent", 0));
-
         //when & then
         assertThatThrownBy(() -> RacingCarList.fromCarList(carList)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(
                         Constants.COMMON_ERROR_HEADER);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {4, 5, 6})
+    @DisplayName("raceTest:[success]")
+    void raceTest(int trial){
+        //given
+        String[] str2 = {"Avent : -", "Tusca : -", "Boxst : -"};
+        //when
+        RacingCarList racingCarList = getRacedRacingCarList(trial);
+        //then
+        for (int i = 0; i <3; i++) {
+            assertThat(racingCarList.getAllStatus()[i]).isEqualTo(racingCarList.getCarStatus(i));
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({"123,1","111,3","122,2","221,2"})
+    @DisplayName("getWinnerListTest (사이즈 테스트):[success]")
+    void getWinnerList_sizeTest(String input,int expected){
+        //when
+        int[] inputArr = getIntegerInputArr(input.split(""));
+        List<Car> carList = getCarListWithInputArr(inputArr);
+        RacingCarList racingCarList = RacingCarList.fromCarList(carList);
+        //then
+        List<String> winnerList = racingCarList.getWinnerList();
+        assertThat(winnerList).hasSize(expected);
+    }
+
+    private List<Car> getCarListWithInputArr(int[] inputArr) {
+        List<Car> carList = new ArrayList<>();
+        for (int i = 0; i < inputArr.length; i++) {
+            carList.add(Car.valueOf("car".concat(Integer.toString(i)), inputArr[i]));
+        }
+        return carList;
+    }
+
+    private RacingCarList getRacedRacingCarList(int trial){
+        RacingCarList racingCarList = RacingCarList.fromCarList(carList);
+        for (int i = 0; i < trial; i++) {
+            racingCarList.race();
+        }
+        return racingCarList;
+    }
+
+    private int[] getIntegerInputArr(String[] inputArr){
+        int[] resultRecord = new int[inputArr.length];
+        for (int i = 0; i < inputArr.length; i++) {
+            resultRecord[i] = Integer.parseInt(inputArr[i]);
+        }
+        return resultRecord;
     }
 
 }
