@@ -8,6 +8,8 @@ public class Constants {
     public static final String PROGRESS_PARTICLE = "-";
 
     public static final String COMMON_ERROR_HEADER = "[ERROR] ";
+    public static final String ERROR_TRIAL_INPUT = "시도 횟수는 숫자여야 한다.";
+    public static final String ERROR_TRIAL_RANGE_OVER = "시도 횟수는 양수여야 한다.";
     public static final String ERROR_CAR_NAME_SIZE_OVER = "은(는) 이름이 너무 깁니다.";
     public static final String ERROR_CAR_DUPLICATE = "은(는) 중복입니다.";
 }
