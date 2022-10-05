@@ -12,7 +12,7 @@ import java.util.Set;
 public class RacingCarList {
     private final List<Car> carList;
 
-    private RacingCarList(List<Car> carList) throws IllegalArgumentException {
+    private RacingCarList(List<Car> carList) {
         validateCarName(carList);
         validateDuplicate(carList);
         this.carList = carList;
@@ -24,7 +24,7 @@ public class RacingCarList {
      * @param carList list of car
      * @return new RacingCarList
      */
-    public static RacingCarList fromCarList(List<Car> carList) {
+    public static RacingCarList fromCarList(List<Car> carList) throws IllegalArgumentException {
         return new RacingCarList(carList);
     }
 
