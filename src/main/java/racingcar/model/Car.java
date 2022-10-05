@@ -1,7 +1,8 @@
 package racingcar.model;
 
+import static racingcar.common.Constants.*;
+
 import java.util.Objects;
-import racingcar.common.Constants;
 
 /**
  * Value Object of Main Domain
@@ -9,16 +10,17 @@ import racingcar.common.Constants;
 public class Car {
     private final String name;
 
-    private int progress = 0;
+    private Progress currentProgress;
 
     private Car(String name, int progress) {
         this.name = name;
-        this.progress = progress;
+        this.currentProgress = Progress.from(progress);
     }
 
     /**
      * Car creation method
-     * @param name name of car
+     *
+     * @param name     name of car
      * @param progress progress of car
      * @return new Car
      */
@@ -42,17 +44,21 @@ public class Car {
      */
     private String getProgressString() {
         String result = "";
-        for (int i = 0; i < progress; i++) {
-            result = result.concat(Constants.PROGRESS_PARTICLE);
+        for (int i = 0; i < currentProgress.getProgress(); i++) {
+            result = result.concat(PROGRESS_PARTICLE);
         }
         return result;
+    }
+
+    public int getProgress() {
+        return currentProgress.getProgress();
     }
 
     /**
      * Increases the Car's Progress.
      */
     public void increaseProgress() {
-        progress++;
+        this.currentProgress = this.currentProgress.increaseProgress(1);
     }
 
     @Override
