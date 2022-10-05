@@ -33,16 +33,6 @@ class UserTrialRequestTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"0","-1","-12","-123"})
-    @DisplayName("valueOf (양수외 입력 예외):[failure]")
-    void valueOf_trialRangeException(String input){
-        //when&then
-        assertThatThrownBy(()->UserTrialRequest.valueOf(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(COMMON_ERROR_HEADER.concat(ERROR_TRIAL_RANGE_OVER));
-    }
-
-    @ParameterizedTest
     @CsvSource({"1,1","2,2","12,12","123,123"})
     @DisplayName("getTrial:[success]")
     void getTrial(String input, int expect){
